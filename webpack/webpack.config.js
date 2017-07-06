@@ -50,7 +50,6 @@ module.exports = {
             filename: 'css/[name].css',
             allChunks: true,
         }),
-        new webpack.NamedModulesPlugin(),
         new HtmlWebapckPlugin({
             template: 'app/public/index.html',
             favicon: 'app/public/favicon.ico',

@@ -1,0 +1,31 @@
+.tab {
+    float: left;
+    list-style: none;
+    margin-right: 24px;
+    padding: 8px 20px;
+    text-decoration: none;
+    color: #666;
+    cursor: pointer;
+}
+
+.tabActive {
+    color: #00c49f;
+    cursor: default;
+}
+
+.bar {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.nav {
+    font-size: 14px;
+    &:after,
+    &:before {
+        display: table;
+        content: '';
+    }
+    &:after {
+        clear: both
+    }
+}

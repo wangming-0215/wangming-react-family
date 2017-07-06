@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import List from './components/List';
 import './app.scss';
+import { AppContainer } from 'react-hot-loader';
+import Redbox from 'redbox-react';
+import Tabs from './components/Tabs';
+import TabPane from './components/Tabs/TabPane';
 
 let root = document.getElementById('app');
 if (!root) {
@@ -10,25 +13,27 @@ if (!root) {
     document.body.appendChild(root);
 }
 
-// const PRODUCTS = [
-//     { category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football' },
-//     { category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball' },
-//     { category: 'Sporting Goods', price: '$29.99', stocked: false, name: 'Basketball' },
-//     { category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch' },
-//     { category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5' },
-//     { category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7' }
-// ];
+const app = (
+    <AppContainer errorReporter={Redbox}>
+        <Tabs defaultActiveIndex={0} className="tabs-bar">
+            <TabPane order="0" tab={'Tab 1'}>第一个 Tab 里的内容</TabPane>
+            <TabPane order="1" tab={'Tab 2'}>第二个 Tab 里的内容</TabPane>
+            <TabPane order="2" tab={'Tab 3'}>第三个 Tab 里的内容</TabPane>
+        </Tabs>
+    </AppContainer>
+);
 
-// ReactDOM.render(
-//     <FilterableProductTable products={PRODUCTS} />,
-//     document.getElementById('app')
-// );
 ReactDOM.render(
-    <List />,
-    document.getElementById('app')
+    app,
+    root
 );
 
 // 模块热替换的 API
-if (!module.hot) {
-    module.hot();
+if (module.hot) {
+    module.hot.accept('./components/Tabs', () => {
+        ReactDOM.render(
+            app,
+            root
+        )
+    })
 }
