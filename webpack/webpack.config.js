@@ -4,22 +4,23 @@ var webpack = require('webpack');
 var HtmlWebapckPlugin = require("html-webpack-plugin")
 
 module.exports = {
-    context: path.resolve(__dirname, '../src'),
     devtool: "inline-source-map",
     resolve: {
         extensions: ['.js', '.json'],
     },
-    entry: ['./app/app.js'],
+    entry: [path.resolve(__dirname, '../js/source/app.js')],
     output: {
         filename: 'js/[name].bundle.js',
-        path: path.resolve(__dirname, '../dist'),
+        path: path.resolve(__dirname, '../js/build'),
+        publicPath: '/'
     },
     module: {
         rules: [{
             test: /\.jsx?$/,
             use: "babel-loader",
             exclude: /node_modules/,
-        }, {
+        },
+        {
             test: /\.(css|scss)$/,
             use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
@@ -29,7 +30,7 @@ module.exports = {
                         options: {
                             modules: true,
                             importLoaders: 1,
-                            loaclIndetName: '[name]__[local]___[hash:base64:5]',
+                            localIdentName: '[name]__[local]___[hash:base64:5]',
                             sourceMap: true,
                         },
                     },
@@ -41,6 +42,18 @@ module.exports = {
                     },
                 ],
             }),
+        },
+        {
+            test: /\.(png|jpg|gif|svg)$/,
+            use: [
+                {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 8192,
+                        name: '[name].[ext]'
+                    }
+                }
+            ]
         }],
     },
 
@@ -51,8 +64,7 @@ module.exports = {
             allChunks: true,
         }),
         new HtmlWebapckPlugin({
-            template: 'app/public/index.html',
-            favicon: 'app/public/favicon.ico',
+            template: path.resolve(__dirname, '../js/source/public/index.html'),
         }),
     ],
 }
